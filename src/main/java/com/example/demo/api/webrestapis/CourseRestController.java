@@ -4,7 +4,6 @@ import com.example.demo.mapper.CourseConvertor;
 import com.example.demo.model.course.CourseEntity;
 import com.example.demo.model.course.CourseModel;
 import com.example.demo.service.CourseService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +23,8 @@ public class CourseRestController {
 
     @PostMapping("/save")
     public CourseModel save(@RequestBody CourseModel courseModel) {
-        return courseConvertor.entityToModelConvertor(courseService.saveCourse(courseConvertor.modelToEntityConvertor(courseModel)));
+        return courseConvertor.entityToModelConvertor(courseService.saveCourse(
+                courseConvertor.modelToEntityConvertor(courseModel)));
     }
 
     @DeleteMapping("/delete/{courseId}")
@@ -50,11 +50,13 @@ public class CourseRestController {
 
     @GetMapping("/getCourse/{courseId}")
     public CourseModel getCourse(@PathVariable Long courseId){
-        return courseConvertor.entityToModelConvertor(courseService.getCourse(courseConvertor.modelToEntityConvertor(new CourseModel(courseId))));
+        return courseConvertor.entityToModelConvertor(courseService.getCourse(
+                courseConvertor.modelToEntityConvertor(new CourseModel(courseId))));
     }
 
     @PutMapping("update")
     public CourseModel updateCourse(@RequestBody CourseModel courseModel){
-        return courseConvertor.entityToModelConvertor(courseService.saveCourse(courseConvertor.modelToEntityConvertor(courseModel)));
+        return courseConvertor.entityToModelConvertor(courseService.saveCourse(
+                courseConvertor.modelToEntityConvertor(courseModel)));
     }
 }
