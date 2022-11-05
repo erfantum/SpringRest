@@ -22,7 +22,8 @@ public class StudentRestController {
 
     @PostMapping("/save")
     public StudentModel save(@RequestBody StudentModel studentModel) {
-        return studentConvertor.entityToModelConvertor(studentService.saveStudent(studentConvertor.modelToEntityConvertor(studentModel)));
+        return studentConvertor.entityToModelConvertor(studentService.saveStudent(
+                studentConvertor.modelToEntityConvertor(studentModel)));
     }
 
     @DeleteMapping("/delete/{studentId}")
@@ -46,12 +47,14 @@ public class StudentRestController {
 
     @GetMapping("/getStudent/{studentId}")
     public StudentModel getStudent(@PathVariable Long studentId) {
-        return studentConvertor.entityToModelConvertor(studentService.getStudentById(studentConvertor.modelToEntityConvertor(new StudentModel(studentId))));
+        return studentConvertor.entityToModelConvertor(studentService.getStudentById(
+                studentConvertor.modelToEntityConvertor(new StudentModel(studentId))));
     }
 
 
     @PutMapping("/update")
     public StudentModel updateStudent(@RequestBody StudentModel studentModel) {
-        return studentConvertor.entityToModelConvertor(studentService.saveStudent(studentConvertor.modelToEntityConvertor(studentModel)));
+        return studentConvertor.entityToModelConvertor(studentService.saveStudent(
+                studentConvertor.modelToEntityConvertor(studentModel)));
     }
 }
