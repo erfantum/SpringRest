@@ -13,6 +13,10 @@ public class StudentModel {
     public StudentModel() {
     }
 
+    public StudentModel(Long student_Id) {
+        this.student_Id = student_Id;
+    }
+
     public StudentModel(Long student_Id, String name) {
         this.student_Id = student_Id;
         this.name = name;

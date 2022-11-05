@@ -13,9 +13,9 @@ public class StudentEntity {
 
     private String name;
 
-    @ManyToMany
-    @JoinTable(joinColumns = @JoinColumn(name = "course_Id"),
-    inverseJoinColumns = @JoinColumn(name = "student_Id"))
+    @ManyToMany(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+    @JoinTable(joinColumns = @JoinColumn(name = "student_Id"),
+    inverseJoinColumns = @JoinColumn(name = "course_Id"))
     private List<CourseEntity> courses;
 
     public StudentEntity(Long student_Id, String name, List<CourseEntity> courses) {
@@ -34,6 +34,11 @@ public class StudentEntity {
     public StudentEntity(String name, List<CourseEntity> courses) {
         this.name = name;
         this.courses = courses;
+    }
+
+    public StudentEntity(Long student_Id, String name) {
+        this.student_Id = student_Id;
+        this.name = name;
     }
 
     public Long getStudent_Id() {

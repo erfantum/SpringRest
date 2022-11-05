@@ -1,23 +1,15 @@
 package com.example.demo.model.course;
 
-import com.example.demo.model.student.StudentModel;
-
-import java.util.List;
-
 public class CourseModel {
     private Long course_Id;
 
     private String name;
 
-    private List<StudentModel> students;
-
     public CourseModel() {
     }
 
-    public CourseModel(Long course_Id, String name, List<StudentModel> students) {
+    public CourseModel(Long course_Id) {
         this.course_Id = course_Id;
-        this.name = name;
-        this.students = students;
     }
 
     public CourseModel(Long course_Id, String name) {
@@ -43,13 +35,5 @@ public class CourseModel {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<StudentModel> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<StudentModel> students) {
-        this.students = students;
     }
 }

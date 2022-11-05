@@ -14,18 +14,18 @@ public class CourseEntity {
     private String name;
 
     @ManyToMany(mappedBy = "courses")
-    private List<StudentEntity> students;
+    List<StudentEntity> students;
 
     public CourseEntity() {
     }
 
-    public CourseEntity(Long course_Id, String name, List<StudentEntity> students) {
+    public CourseEntity(Long course_Id, String name) {
         this.course_Id = course_Id;
         this.name = name;
-        this.students = students;
     }
 
-    public CourseEntity(String name, List<StudentEntity> students) {
+    public CourseEntity(Long course_Id, String name, List<StudentEntity> students) {
+        this.course_Id = course_Id;
         this.name = name;
         this.students = students;
     }

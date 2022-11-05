@@ -4,43 +4,54 @@ import com.example.demo.mapper.StudentConvertor;
 import com.example.demo.model.student.StudentEntity;
 import com.example.demo.model.student.StudentModel;
 import com.example.demo.service.StudentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/students")
 public class StudentRestController {
-    @Autowired
-    private StudentConvertor studentConvertor;
+    private final StudentConvertor studentConvertor;
+    private final StudentService studentService;
 
-    @Autowired
-    private StudentService studentService;
+    public StudentRestController(StudentConvertor studentConvertor, StudentService studentService) {
+        this.studentConvertor = studentConvertor;
+        this.studentService = studentService;
+    }
 
     @PostMapping("/save")
-    public StudentModel save(@RequestBody StudentModel studentModel){
-        StudentEntity studentEntity = studentConvertor.modelToEntityConvertor(studentModel);
-        StudentEntity savedStudent = studentService.saveStudent(studentEntity);
-
-        StudentModel savedModel = studentConvertor.entityToModelConvertor(savedStudent);
-
-
-        return savedModel;
+    public StudentModel save(@RequestBody StudentModel studentModel) {
+        return studentConvertor.entityToModelConvertor(studentService.saveStudent(studentConvertor.modelToEntityConvertor(studentModel)));
     }
 
     @DeleteMapping("/delete/{studentId}")
-    public String deleteStudent(@PathVariable Long studentId){
-        StudentModel studentModel =new StudentModel();
-
-        studentModel.setStudent_Id(studentId);
-
-        StudentEntity studentEntity = studentConvertor.modelToEntityConvertor(studentModel);
-
+    public String deleteStudent(@PathVariable Long studentId) {
+        StudentEntity studentEntity = studentConvertor.modelToEntityConvertor(new StudentModel(studentId));
         try {
             studentService.deleteStudent(studentEntity);
-            return ";";
-        }catch (Exception e){
+            return "DELETED";
+        } catch (Exception e) {
             e.getCause();
-            return "a";
+            return "ERROR";
         }
+    }
+
+    @GetMapping("/getAllStudent")
+    public List<StudentModel> getAllStudent() {
+        return studentService.getAllStudent().stream()
+                .map(studentConvertor::entityToModelConvertor)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/getStudent/{studentId}")
+    public StudentModel getStudent(@PathVariable Long studentId) {
+        return studentConvertor.entityToModelConvertor(studentService.getStudentById(studentConvertor.modelToEntityConvertor(new StudentModel(studentId))));
+    }
+
+
+    @PutMapping("/update")
+    public StudentModel updateStudent(@RequestBody StudentModel studentModel) {
+        return studentConvertor.entityToModelConvertor(studentService.saveStudent(studentConvertor.modelToEntityConvertor(studentModel)));
     }
 }
